@@ -1,5 +1,5 @@
 # androidbootybounce.xyz
-this is android booty bounce appreciation corner where people can their username or messages (mostly messages since people are dumbfucks) and get honoured in android booty bounce's name
+this is android booty bounce appreciation corner where people can their username or messages (mostly messages since people are dumbfucks) and get honoured in android booty bounce's name.
 
 # ok bro i get it how do i install ts
 ```npm i``` then you change the kv in `wrangler.jsonc` then you add a webhook secret with a webhook of your choice using ```npx wrangler secret put DISCORD_WEBHOOK_URL```
