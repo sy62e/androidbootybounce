@@ -9,9 +9,6 @@
   font-family: 'Comic Sans Custom', "Comic Sans MS", "Comic Sans", cursive, sans-serif;
 }
 
-* {
-    font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
-}
 
 .header-container {
     display: flex;
