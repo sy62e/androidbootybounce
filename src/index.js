@@ -4,6 +4,7 @@ import warningPage from "./pages/warning.html";
 import cssStyles from "./pages/style.css";
 import bannedWords from "./data/banned_words.json";
 import userCustomization from "./data/user_customization.json";
+import comicFont from "./fonts/comic.ttf";
 
 const ipRateLimit = new Map();
 const MAX_CHAR_LIMIT = 20;
@@ -53,6 +54,16 @@ export default {
     if (url.pathname === "/style.css" || url.pathname === "/styles.css") {
       return new Response(cssStyles, {
         headers: { "Content-Type": "text/css; charset=utf-8" }
+      });
+    }
+    
+    // comic sans ms serving rated E for everyone
+    if (url.pathname === "/comic.ttf") {
+      return new Response(comicFont, {
+        headers: {
+          "Content-Type": "font/ttf",
+          "Cache-Control": "public, max-age=31536000, immutable" // Caches font on user devices
+        }
       });
     }
 
