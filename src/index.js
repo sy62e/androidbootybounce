@@ -2,7 +2,6 @@ import mainPage from "./pages/main.html";
 import slowdownPage from "./pages/slowdown.html";
 import warningPage from "./pages/warning.html";
 import cssStyles from "./pages/style.css";
-
 import bannedWords from "./data/banned_words.json";
 import userCustomization from "./data/user_customization.json";
 

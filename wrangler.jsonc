@@ -7,7 +7,9 @@
 	"name": "android-booty-bounce",
 	"main": "src/index.js",
 	"compatibility_date": "2026-07-30",
-	"rules": [{ "type": "Text", "globs": ["**/*.html", "**/*.css"] }, { "type": "Data", "globs": ["**/*.json"] }],
+	"rules": [
+    { "type": "Text", "globs": ["**/*.html", "**/*.css"] }
+	],
 	"observability": {
 		"enabled": true
 	},
