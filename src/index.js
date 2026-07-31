@@ -55,9 +55,6 @@ const BANNED_WORDS = [
   "dilf",
   "circlejerk",
   "skank",
-  "slut",
-  "twat",
-  "wanker",
   "get cancer",
   "Bienvenue dans le presse-papiers Gboard.", // lmao
   "https://",
