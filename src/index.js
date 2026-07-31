@@ -3,72 +3,11 @@ import slowdownPage from "./pages/slowdown.html";
 import warningPage from "./pages/warning.html";
 import cssStyles from "./pages/style.css";
 
+import bannedWords from "./data/banned_words.json";
+import userCustomization from "./data/user_customization.json";
+
 const ipRateLimit = new Map();
-
 const MAX_CHAR_LIMIT = 20;
-
-const BANNED_WORDS = [
-  "nigger",
-  "nigga",
-  "nigg",
-  "niggas",
-  "faggot",
-  "fag",
-  "fags",
-  "fagged",
-  "kike",
-  "kikes",
-  "tranny",
-  "trannies",
-  "chink",
-  "chinks",
-  "spic",
-  "spics",
-  "cunt",
-  "cunts",
-  "wetback",
-  "gook",
-  "retard",
-  "retarded",
-  "epstein",
-  "ep",
-  "jeffrey",
-  "charlie kirk",
-  "kirk",
-  "kirky",
-  "trump",
-  "porn",
-  "pornhub",
-  "rule34",
-  "rul34",
-  "hentai",
-  "xvideos",
-  "redtube",
-  "youporn",
-  "blowjob",
-  "handjob",
-  "cum",
-  "cumslut",
-  "jizz",
-  "bukakke",
-  "milf",
-  "dilf",
-  "circlejerk",
-  "skank",
-  "get cancer",
-  "Bienvenue dans le presse-papiers Gboard.", // lmao
-  "https://",
-  "http://",
-  ".com",
-  ".net",
-  ".be",
-  "youtube.com",
-  "cdn.discordapp.com",
-  "cdn.discordapp.net",
-  ".exe",
-  ".bat",
-  ".jar"
-];
 
 function escapeHtml(str) {
   return String(str)
@@ -81,7 +20,22 @@ function escapeHtml(str) {
 
 function containsSlur(text) {
   const lower = text.toLowerCase();
-  return BANNED_WORDS.some(word => lower.includes(word));
+  return bannedWords.some(word => lower.includes(word));
+}
+
+function formatUsername(name) {
+  const cleanName = escapeHtml(name);
+  const style = userCustomization[name];
+
+  if (!style) {
+    return cleanName;
+  }
+
+  if (style.toLowerCase() === "rainbow") {
+    return `<span class="rainbow-text">${cleanName}</span>`;
+  }
+
+  return `<span style="color: ${escapeHtml(style)}; font-weight: bold;">${cleanName}</span>`;
 }
 
 function renderTemplate(htmlContent, replacements = {}) {
@@ -91,17 +45,19 @@ function renderTemplate(htmlContent, replacements = {}) {
   }
   return output;
 }
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-          // css route for some reason
+
+    // css serving like a fresh bottle of coke god im hungry
     if (url.pathname === "/style.css" || url.pathname === "/styles.css") {
       return new Response(cssStyles, {
         headers: { "Content-Type": "text/css; charset=utf-8" }
       });
     }
-      
-  // rules route
+
+    // rules
     if (url.pathname === "/rules") {
       const rulesHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -135,7 +91,6 @@ export default {
       });
     }
 
-    // form route
     if (request.method === "POST" && url.pathname === "/submit") {
       try {
         const formData = await request.formData();
@@ -145,7 +100,6 @@ export default {
         const now = Date.now();
         const lastSubmit = ipRateLimit.get(clientIp) || 0;
 
-        // Rate Limit Safeguard -> Render slowdownPage
         if (now - lastSubmit < 10000) {
           return new Response(renderTemplate(slowdownPage), {
             status: 429,
@@ -200,11 +154,11 @@ export default {
         return new Response("error bc the server is shit", { status: 500 });
       }
     }
-// main route
+
     const bouncersList = await env.BOUNCERS_KV.get("users_json", { type: "json" }) || [];
 
     const bouncersHtml = bouncersList.length > 0
-      ? bouncersList.map(name => `<li>${escapeHtml(name)}</li>`).join("")
+      ? bouncersList.map(name => `<li>${formatUsername(name)}</li>`).join("")
       : "<li>no booty bouncers :wompwomp:</li>";
 
     const submitted = url.searchParams.get("submitted");
