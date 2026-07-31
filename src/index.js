@@ -5,6 +5,7 @@ import cssStyles from "./pages/style.css";
 import bannedWords from "./data/banned_words.json";
 import userCustomization from "./data/user_customization.json";
 import comicFont from "./fonts/comic.ttf";
+import discordIcon from "./pages/discord.png";
 
 const ipRateLimit = new Map();
 const MAX_CHAR_LIMIT = 20;
@@ -49,6 +50,16 @@ function renderTemplate(htmlContent, replacements = {}) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    
+    // serve discord logo
+    if (url.pathname === "/discord.png") {
+  return new Response(discordIcon, {
+    headers: { 
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=31536000, immutable"
+        }
+      });
+    }
 
     // css serving like a fresh bottle of coke god im hungry
     if (url.pathname === "/style.css" || url.pathname === "/styles.css") {
@@ -56,7 +67,7 @@ export default {
         headers: { "Content-Type": "text/css; charset=utf-8" }
       });
     }
-    
+
     // comic sans ms serving rated E for everyone
     if (url.pathname === "/comic.ttf") {
       return new Response(comicFont, {

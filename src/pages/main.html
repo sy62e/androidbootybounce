@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Android Booty Bounce</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 
@@ -18,11 +18,15 @@
     </ul>
 
     <form action="/submit" method="POST">
-        <input type="text" name="username" placeholder="enter el usernamito" required>
+        <input type="text" name="username" placeholder="enter el usernamito" maxlength="{{MAX_CHAR_LIMIT}}" required>
         <button type="submit">send</button>
     </form>
 
     {{ALERT_MESSAGE}}
+
+    <a href="https://discord.gg/8eV87Swc53" target="_blank" rel="noopener noreferrer" class="discord-float-btn" title="join the appreciation group">
+        <img src="/discord.png" alt="discord icon">
+    </a>
 
 </body>
 </html>

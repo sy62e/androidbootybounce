@@ -65,3 +65,22 @@ body.warning-body h1 {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+.discord-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: block;
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.discord-float-btn:hover {
+  transform: scale(1.1);
+}
+
+.discord-float-btn img {
+  width: 40px;
+  height: 40px;
+  display: block;
+}

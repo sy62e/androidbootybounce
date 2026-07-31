@@ -8,7 +8,8 @@
 	"main": "src/index.js",
 	"compatibility_date": "2026-07-30",
 	"rules": [
-    { "type": "Text", "globs": ["**/*.html", "**/*.css", "**/*.ttf"] }
+    { "type": "Text", "globs": ["**/*.html", "**/*.css"] },
+    { "type": "Data", "globs": ["**/*.json", "**/*.png", "**/*.ico", "**/*.ttf"] }
 	],
 	"observability": {
 		"enabled": true
